@@ -7,10 +7,10 @@ namespace ExempleDelegues
         static void Main(string[] args)
         {
             Console.WriteLine("\n\nFaible cohesion :(");
-           // new FaibleCohesion().ExempleFaibleCohesion();
+            new FaibleCohesion().ExempleFaibleCohesion();
 
             Console.WriteLine("\n\nFort couplage :(");
-           // new FortCouplage().ExempleFortCouplage();
+            new FortCouplage().ExempleFortCouplage();
 
             Console.WriteLine("\n\nObservateur :)");
             new Observateur().ExempleObservateur();

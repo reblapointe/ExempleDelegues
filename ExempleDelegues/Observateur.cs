@@ -14,6 +14,7 @@ namespace ExempleDelegues
 
         private List<IObservateurOgre> observers = new List<IObservateurOgre>();
 
+        public string[] Table { get; set; }
         public string Plat { get; set; }
         public string Nom { get; set; }
 
@@ -25,8 +26,14 @@ namespace ExempleDelegues
             foreach (IObservateurOgre observer in observers)
                 observer.MettreAJour(this);
 
-            Thread.Sleep(r.Next(2000));
+            Thread.Sleep(r.Next(1000));
             Plat = "";
+        }
+
+        public void Manger()
+        {
+            for (int i = 0; i < 5; i++)
+                Manger(Table[r.Next(Table.Length)]);
         }
 
         public void AddObserver(IObservateurOgre observateur)
@@ -38,18 +45,18 @@ namespace ExempleDelegues
     {
         public void ExempleObservateur()
         {
+            string[] plats = { "Cheval", "Jambon", "Cervelle", "Caviar", "Camembert", "Saindoux", "Beurre de pinotte", "Rhum", "Artichaut", "Mais", "Langouste", "Chataîgne" };
+
             OgreObservateur[] ogres = {
-                new OgreObservateur { Nom = "Bleuzrog" },
-                new OgreObservateur { Nom = "Irok" },
-                new OgreObservateur { Nom = "Kaakur" }};
+                new OgreObservateur { Nom = "Bleuzrog", Table = plats },
+                new OgreObservateur { Nom = "Irok", Table = plats },
+                new OgreObservateur { Nom = "Kaakur", Table = plats }};
 
             foreach (OgreObservateur o in ogres)
                 o.AddObserver(this);
 
-            string[] plats = { "Cheval", "Jambon", "Cervelle", "Caviar", "Camembert", "Saindoux", "Beurre de pinotte", "Rhum", "Artichaut", "Mais", "Langouste", "Chataîgne"};
-            for (int i = 0; i < plats.Length / ogres.Length; i++)
-                for(int j = 0; j < ogres.Length; j++)
-                    ogres[j].Manger(plats[ogres­.Length * i + j]);
+            foreach (OgreObservateur o in ogres)
+                o.Manger();
 
         }
 

@@ -12,6 +12,7 @@ namespace ExempleDelegues
 
         private MettreAJour observers;
 
+        public string[] Table { get; set; }
         public string Plat { get; set; }
         public string Nom { get; set; }
 
@@ -20,9 +21,15 @@ namespace ExempleDelegues
             // Manger le plat
             Plat = plat;
             observers.Invoke(this);
-            Thread.Sleep(r.Next(2000));
+            Thread.Sleep(r.Next(1000));
 
             Plat = "";
+        }
+        
+        public void Manger()
+        {
+            for (int i = 0; i < 5; i++)
+                Manger(Table[r.Next(Table.Length)]);
         }
 
         public void AddObserver(MettreAJour observer)
@@ -34,10 +41,14 @@ namespace ExempleDelegues
     {
         public void ExempleDelegues()
         {
+            string[] plats = { "Cheval", "Jambon", "Cervelle", "Caviar", "Camembert", "Saindoux", "Beurre de pinotte", "Rhum", "Artichaut", "Mais", "Langouste", "Chataîgne" };
+
             OgreDelegue[] ogres = {
-                new OgreDelegue { Nom = "Bleuzrog" },
-                new OgreDelegue { Nom = "Irok" },
-                new OgreDelegue { Nom = "Kaakur" }};
+                new OgreDelegue { Nom = "Bleuzrog", Table = plats },
+                new OgreDelegue { Nom = "Irok", Table = plats },
+                new OgreDelegue { Nom = "Kaakur", Table = plats }};
+
+
 
             foreach (OgreDelegue o in ogres)
                 o.AddObserver(Imprimer);
@@ -45,13 +56,10 @@ namespace ExempleDelegues
             // OU
 
             //foreach (OgreDelegue o in ogres)
-            //s    o.AddObserver(o => Console.WriteLine($"{o.Nom} mange {o.Plat}."));
+            //    o.AddObserver(o => Console.WriteLine($"{o.Nom} mange {o.Plat}."));
 
-            string[] plats = { "Cheval", "Jambon", "Cervelle", "Caviar", "Camembert", "Saindoux", "Beurre de pinotte", "Rhum", "Artichaut", "Mais", "Langouste", "Chataîgne"};
-            for (int i = 0; i < plats.Length / ogres.Length; i++)
-                for(int j = 0; j < ogres.Length; j++)
-                    ogres[j].Manger(plats[ogres­.Length * i + j]);
-
+            for (int j = 0; j < ogres.Length; j++)
+                ogres[j].Manger();
         }
 
         public void Imprimer(OgreDelegue ogre)

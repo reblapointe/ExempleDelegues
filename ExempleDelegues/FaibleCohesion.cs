@@ -6,28 +6,44 @@ namespace ExempleDelegues
     class OgreFaibleCohesion
     {
         static readonly Random r = new Random();
+
+        public string[] Table { get; set; }
+        public string Plat { get; set; }
         public string Nom { get; set; }
+
 
         public void Manger(string plat)
         {
             // Manger le plat
-            Thread.Sleep(r.Next(2000));
+            Plat = plat;
+
             Console.WriteLine($"{Nom} mange {plat}.");
+
+            Thread.Sleep(r.Next(1000));
+            Plat = "";
+        }
+
+        public void Manger()
+        {
+            for (int i = 0; i < 5; i++)
+                Manger(Table[r.Next(Table.Length)]);
+
         }
     }
+
     class FaibleCohesion
     {
         public void ExempleFaibleCohesion()
         {
-            OgreFaibleCohesion[] ogres = {
-                new OgreFaibleCohesion { Nom = "Bleuzrog" },
-                new OgreFaibleCohesion { Nom = "Irok" },
-                new OgreFaibleCohesion { Nom = "Kaakur" }};
+            string[] plats = { "Cheval", "Jambon", "Cervelle", "Caviar", "Camembert", "Saindoux", "Beurre de pinotte", "Rhum", "Artichaut", "Mais", "Langouste", "Chataîgne" };
 
-            string[] plats = { "Cheval", "Jambon", "Cervelle", "Caviar", "Camembert", "Saindoux", "Beurre de pinotte", "Rhum", "Artichaut", "Mais", "Langouste", "Chataîgne"};
-            for (int i = 0; i < plats.Length / ogres.Length; i++)
-                for(int j = 0; j < ogres.Length; j++)
-                    ogres[j].Manger(plats[ogres­.Length * i + j]);
+            OgreFaibleCohesion[] ogres = {
+                new OgreFaibleCohesion { Nom = "Bleuzrog", Table = plats },
+                new OgreFaibleCohesion { Nom = "Irok", Table = plats },
+                new OgreFaibleCohesion { Nom = "Kaakur", Table = plats }};
+
+            for (int j = 0; j < ogres.Length; j++)
+                ogres[j].Manger();
 
         }
     }
